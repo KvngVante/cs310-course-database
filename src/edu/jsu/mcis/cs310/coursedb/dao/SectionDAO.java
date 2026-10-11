@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 
+import com.github.cliftonlabs.json_simple.JsonArray;
+import com.github.cliftonlabs.json_simple.JsonObject;
+
+
 public class SectionDAO {
     
     private static final String QUERY_FIND = "SELECT * FROM section WHERE termid = ? AND subjectid = ? AND num = ? ORDER BY crn";
@@ -18,21 +22,26 @@ public class SectionDAO {
     public String find(int termid, String subjectid, String num) {
         
         String result = "[]";
-        
         PreparedStatement ps = null;
         ResultSet rs = null;
-        ResultSetMetaData rsmd = null;
         
         try {
             
             Connection conn = daoFactory.getConnection();
             
             if (conn.isValid(0)) {
-                
-                // INSERT YOUR CODE HERE
-                
+                ps = conn.prepareStatement(
+                        "SELECT * FROM section WHERE termid = ? AND subjectid = ? AND num = ? ORDER BY crn"
+                );
+                ps.setInt(1, termid);
+                ps.setString(2, subjectid);
+                ps.setString(3, num);
+
+                rs = ps.executeQuery();
+                result = DAOUtility.getResultSetAsJson(rs);
+
             }
-            
+
         }
         
         catch (Exception e) { e.printStackTrace(); }
