@@ -17,3 +17,7 @@ local.properties
 /nbproject/
 build.xml
 manifest.mf
+/DatabaseTestVersion1/build/
+/DatabaseTestVersion1/nbproject/private/
+/DatabaseTestVersion2/build/
+/DatabaseTestVersion2/nbproject/private/
